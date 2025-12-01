@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CreateUserRequest, CreateUserResponse } from '../models/user';
+import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -18,5 +18,15 @@ export class UserService {
 
     const url = "http://localhost:8080/api/user/register";
     return firstValueFrom(this.http.post<CreateUserResponse>(url, createUserRequest));
+  }
+
+  login(email: string, password: string): Promise<LoginResponse> {
+    const loginRequest: LoginRequest = {
+      email: email,
+      password: password
+    }
+
+    const url = "http://localhost:8080/api/auth/login";
+    return firstValueFrom(this.http.post<LoginResponse>(url, loginRequest));
   }
 }
