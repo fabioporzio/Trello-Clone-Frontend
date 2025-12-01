@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse, User } from '../models/user';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,17 @@ import { firstValueFrom } from 'rxjs';
 })
 export class UserService {
   private readonly http = inject(HttpClient);
-  
+
+  getAccessToken(): string | null {
+    const accessToken = localStorage.getItem("access-token");
+    if (accessToken) {
+      return accessToken;
+    }
+    else {
+      return null;
+    }
+  }
+
   register(email: string, username: string, passowrd: string): Promise<CreateUserResponse> {
     const createUserRequest: CreateUserRequest = {
       email: email,
@@ -28,5 +38,17 @@ export class UserService {
 
     const url = "http://localhost:8080/api/auth/login";
     return firstValueFrom(this.http.post<LoginResponse>(url, loginRequest));
+  }
+
+  getUser(): Promise<User> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/user"
+    return firstValueFrom(this.http.get<User>(url, { headers }));
   }
 }

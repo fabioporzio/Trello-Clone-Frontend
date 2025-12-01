@@ -9,6 +9,11 @@ export interface CreateUserResponse {
     username: string
 }
 
+export interface User {
+    email: string,
+    username: string
+}
+
 export interface LoginRequest {
     email: string,
     password: string
