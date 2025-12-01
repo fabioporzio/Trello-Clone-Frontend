@@ -1,0 +1,22 @@
+<main>
+    <h1>Registration Page</h1>
+    @if (validationErrors) 
+    {
+        @for (error of validationErrors; track $index) 
+        {
+            <p class="error">{{ error.message }}</p>
+        }   
+    }
+
+    @if (errorMessage)
+    {
+        <p class="error">{{ errorMessage }}</p>   
+    }
+    
+    <form #registrationForm="ngForm" (ngSubmit)="handleForm(registrationForm)">
+        <input name="email" ngModel required type="email" placeholder="Email">
+        <input name="username" ngModel required placeholder="Username">
+        <input name="password" ngModel required type="password" placeholder="Password">
+        <button type="submit">Register</button>
+    </form>
+</main>
