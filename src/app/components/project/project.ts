@@ -3,7 +3,8 @@ import { ProjectService } from '../../services/project-service/project-service';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
-import { NgModel } from '@angular/forms';
+import { TaskService } from '../../services/task-service/task-service';
+import { CreateTaskRequest, Task } from '../../models/task';
 
 @Component({
   selector: 'app-project',
@@ -14,10 +15,12 @@ import { NgModel } from '@angular/forms';
 export class Project {
   private readonly route = inject(ActivatedRoute);
   private readonly projectService = inject(ProjectService);
+  private readonly taskService = inject(TaskService)
 
   editing: boolean = false;
   displayNewPhaseButton: Boolean = true;
-  displayNewTeamMemberButton = true;
+  displayNewTeamMemberButton: Boolean = true;
+  displayAddTaksButton: Boolean = true;
 
 
   searchText = '';
@@ -114,6 +117,22 @@ export class Project {
 
     this.project = await this.projectService.addPhase(updateProjectRequest, this.project.id!);
     this.displayNewPhaseButton = true;
+  }
+
+  async addTask(form: NgForm, phase: string) {
+    const { taskTitle, taskDescription } = form.value;
+
+    const createTaskRequest: CreateTaskRequest = {
+      title: taskTitle,
+      description: taskDescription,
+      phase: phase,
+      projectId: this.project.id!
+    }
+
+    const newtask: Task = await this.taskService.addTask(createTaskRequest);
+    console.log(newtask)
+    this.displayAddTaksButton = true;
+
   }
 
   async loadUsers() {

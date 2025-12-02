@@ -24,41 +24,51 @@
     @for (phase of project.phases; track $index) {
     <div>
         <h2>{{phase}}</h2>
+
+        @if (displayAddTaksButton) {
+            <button (click)="displayAddTaksButton = false">Add a task</button>
+        }
+        @else {
+        <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm, phase)">
+            <input name="taskTitle" ngModel required type="text" placeholder="Task title">
+            <input name="taskDescription" ngModel required type="text" placeholder="Task description">
+
+            <button type="submit">Add</button>
+        </form>
+        }
     </div>
     }
 </section>
 
 <section class="add-team-member">
 
-  @if (displayNewTeamMemberButton) {
+    @if (displayNewTeamMemberButton) {
     <button (click)="loadUsers()">Add team member</button>
-  }
-  @else {
+    }
+    @else {
 
     <div class="search-container">
 
-      <input
-        type="text"
-        placeholder="Search by email..."
-        [(ngModel)]="searchText"
-        (ngModelChange)="onSearchChange($event)"
-      />
+        <input type="text" placeholder="Search by email..." [(ngModel)]="searchText"
+            (ngModelChange)="onSearchChange($event)" />
 
-      @if (searchText && filteredUsers().length > 0) {
+        @if (searchText && filteredUsers().length > 0) {
         <ul class="autocomplete">
-          @for (user of filteredUsers(); track user) {
+            @for (user of filteredUsers(); track user) {
             <li (click)="selectUser(user.email)">
-              {{ user.email }}
+                {{ user.email }}
             </li>
-          }
+            }
         </ul>
-      }
+        }
     </div>
 
     <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
-  }
+    }
 
-  @for (teamMember of project.team; track teamMember) {
-    <div><h2>{{ teamMember }}</h2></div>
-  }
+    @for (teamMember of project.team; track teamMember) {
+    <div>
+        <h2>{{ teamMember }}</h2>
+    </div>
+    }
 </section>
