@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ProjectService } from '../../services/project-service/project-service';
 import { ActivatedRoute } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-project',
@@ -14,6 +14,8 @@ export class Project {
   private readonly projectService = inject(ProjectService);
 
   editing: boolean = false;
+  displayNewPhaseButton: Boolean = true;
+
   project: Partial<ProjectObject> = {};
   async ngOnInit() {
     const projectId = this.route.snapshot.paramMap.get("id");
@@ -42,5 +44,20 @@ export class Project {
     }
 
     this.project = await this.projectService.updateProjectName(updateProjectRequest, this.project.id!);
+  }
+
+  async addPhase(form: NgForm) {
+    const { newPhase } = form.value;
+
+    this.project.phases?.push(newPhase);
+
+    const updateProjectRequest: UpdateProjectRequest = {
+      name: this.project.name,
+      phases: this.project.phases,
+      team: this.project.team
+    }
+
+    this.project = await this.projectService.addPhase(updateProjectRequest, this.project.id!);
+    this.displayNewPhaseButton = true;
   }
 }

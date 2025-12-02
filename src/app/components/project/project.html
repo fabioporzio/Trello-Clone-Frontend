@@ -1,22 +1,29 @@
 <div class="project-title">
-  <!-- Modalità view -->
-   @if (!editing) {
+    <!-- Modalità view -->
+    @if (!editing) {
     <h1 (click)="startEditing()">{{ project.name }}</h1>
-   }
-   @else {
-    <input
-         [(ngModel)]="project.name"
-         (blur)="stopEditing()"
-         (keyup.enter)="stopEditing()"
-         type="text"
-         class="title-input" 
-    />
-   }  
+    }
+    @else {
+    <input [(ngModel)]="project.name" (blur)="stopEditing()" (keyup.enter)="stopEditing()" type="text"
+        class="title-input" />
+    }
 </div>
 
+<section class="phases">
+    @if (displayNewPhaseButton) {
+        <button (click)="displayNewPhaseButton = false">Add a phase</button>
+    }
+    @else {
+        <form #addPhaseForm="ngForm" (ngSubmit)="addPhase(addPhaseForm)">
+            <input name="newPhase" ngModel required type="text" placeholder="Phase name">
 
-@for (phase of project.phases; track $index) {
+            <button type="submit">Add</button>
+        </form>
+    }
+
+    @for (phase of project.phases; track $index) {
     <div>
         <h2>{{phase}}</h2>
     </div>
-}
+    }
+</section>
