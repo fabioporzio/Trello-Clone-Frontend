@@ -18,7 +18,8 @@ export class Home {
 
   errorMessage: string = "";
   validationErrors: any[] = [];
-  successMessage: string = "";
+  emailChanegSuccess: string = "";
+  usernameChangeSuccess: string = "";
 
   user: Partial<User> = {};
   
@@ -35,7 +36,28 @@ export class Home {
       const { email, newEmail, password } = form.value;
       await this.userService.changeEmail(email, newEmail, password);
 
-      this.successMessage = "Email chang ok!"
+      this.emailChanegSuccess = "Email change ok!"
+    }
+    catch (error: any) {
+      console.error(error);
+
+      if (error?.error?.violations) {
+        this.validationErrors = error.error.violations;
+      }
+      else {
+        this.errorMessage = error?.error?.message ?? "Error during login";
+      }
+    }
+  }
+
+  async changeUsername(form: NgForm): Promise<void> {
+    await this.tokenService.validateTokens();
+
+    try {
+      const { email, newUsername, password } = form.value;
+      await this.userService.changeUsername(email, newUsername, password);
+
+      this.usernameChangeSuccess = "Username change ok!"
     }
     catch (error: any) {
       console.error(error);

@@ -1,8 +1,8 @@
 <h1>Welcome {{user.username}}</h1>
 
 <section>
-    @if (successMessage) {
-        <p>{{successMessage}}</p>
+    @if (emailChanegSuccess) {
+        <p>{{emailChanegSuccess}}</p>
     }
     <h2>Change Email</h2>
 
@@ -10,6 +10,23 @@
         <input name="email" ngModel required type="email" placeholder="Email">
 
         <input name="newEmail" ngModel required placeholder="New Email">
+
+        <input name="password" ngModel required type="password" placeholder="Password">
+
+        <button type="submit">Register</button>
+    </form>
+</section>
+
+<section>
+    @if (usernameChangeSuccess) {
+        <p>{{usernameChangeSuccess}}</p>
+    }
+    <h2>Change Username</h2>
+
+    <form #changeUsernameForm="ngForm" (ngSubmit)="changeUsername(changeUsernameForm)">
+        <input name="email" ngModel required type="email" placeholder="Email">
+
+        <input name="newUsername" ngModel required placeholder="New Username">
 
         <input name="password" ngModel required type="password" placeholder="Password">
 
