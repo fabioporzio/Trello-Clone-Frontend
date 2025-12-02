@@ -1,1 +1,18 @@
 <h1>Welcome {{user.username}}</h1>
+
+<section>
+    @if (successMessage) {
+        <p>{{successMessage}}</p>
+    }
+    <h2>Change Email</h2>
+
+    <form #changeEmailForm="ngForm" (ngSubmit)="changeEmail(changeEmailForm)">
+        <input name="email" ngModel required type="email" placeholder="Email">
+
+        <input name="newEmail" ngModel required placeholder="New Email">
+
+        <input name="password" ngModel required type="password" placeholder="Password">
+
+        <button type="submit">Register</button>
+    </form>
+</section>

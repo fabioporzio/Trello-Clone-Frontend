@@ -23,3 +23,13 @@ export interface LoginResponse {
     accessToken: string,
     refreshToken: string
 }
+
+export interface AccessTokenResponse {
+    accessToken: string
+}
+
+export interface UpdateUserEmailRequest {
+    currentEmail: string,
+    newEmail: string,
+    password: string
+}
