@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse, UpdateUserEmailRequest, UpdateUserUsernameRequest, User } from '../models/user';
+import { CreateUserRequest, CreateUserResponse, LoginRequest, LoginResponse, UpdateUserEmailRequest, UpdateUserPasswordRequest, UpdateUserUsernameRequest, User } from '../models/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -86,5 +86,23 @@ export class UserService {
 
     const url = "http://localhost:8080/api/user/update-username"
     return firstValueFrom(this.http.put<void>(url, updateUserUsernameRequest, { headers }));
+  }
+
+  changePassword(email: string, currentPassword: string, newPassword: string): Promise<void> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const updateUserPasswordRequest: UpdateUserPasswordRequest = {
+      email: email,
+      currentPassword: currentPassword,
+      newPassword: newPassword
+    };
+
+    const url = "http://localhost:8080/api/user/update-password"
+    return firstValueFrom(this.http.put<void>(url, updateUserPasswordRequest, { headers }));
   }
 }

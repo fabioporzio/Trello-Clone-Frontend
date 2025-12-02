@@ -39,3 +39,9 @@ export interface UpdateUserUsernameRequest {
     newUsername: string,
     password: string
 }
+
+export interface UpdateUserPasswordRequest {
+    email: string,
+    currentPassword: string,
+    newPassword: string
+}

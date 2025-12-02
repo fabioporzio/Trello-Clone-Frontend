@@ -20,6 +20,7 @@ export class Home {
   validationErrors: any[] = [];
   emailChanegSuccess: string = "";
   usernameChangeSuccess: string = "";
+  passwordChangeSuccess: string = "";
 
   user: Partial<User> = {};
   
@@ -45,7 +46,7 @@ export class Home {
         this.validationErrors = error.error.violations;
       }
       else {
-        this.errorMessage = error?.error?.message ?? "Error during login";
+        this.errorMessage = error?.error?.message ?? "Error during email change";
       }
     }
   }
@@ -66,7 +67,28 @@ export class Home {
         this.validationErrors = error.error.violations;
       }
       else {
-        this.errorMessage = error?.error?.message ?? "Error during login";
+        this.errorMessage = error?.error?.message ?? "Error during username change";
+      }
+    }
+  }
+
+  async changePassword(form: NgForm): Promise<void> {
+    await this.tokenService.validateTokens();
+
+    try {
+      const { email, currentPassword, newPassword } = form.value;
+      await this.userService.changePassword(email, currentPassword, newPassword);
+
+      this.passwordChangeSuccess = "Password change ok!"
+    }
+    catch (error: any) {
+      console.error(error);
+
+      if (error?.error?.violations) {
+        this.validationErrors = error.error.violations;
+      }
+      else {
+        this.errorMessage = error?.error?.message ?? "Error during password change";
       }
     }
   }

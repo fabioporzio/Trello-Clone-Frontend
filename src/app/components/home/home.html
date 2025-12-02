@@ -33,3 +33,20 @@
         <button type="submit">Register</button>
     </form>
 </section>
+
+<section>
+    @if (passwordChangeSuccess) {
+        <p>{{passwordChangeSuccess}}</p>
+    }
+    <h2>Change Password</h2>
+
+    <form #changePasswordForm="ngForm" (ngSubmit)="changePassword(changePasswordForm)">
+        <input name="email" ngModel required type="email" placeholder="Email">
+
+        <input name="currentPassword" ngModel required type="password" placeholder="Current password">
+
+        <input name="newPassword" ngModel required type="password" placeholder="New Password">
+
+        <button type="submit">Register</button>
+    </form>
+</section>
