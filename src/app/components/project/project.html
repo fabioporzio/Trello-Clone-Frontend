@@ -1,0 +1,22 @@
+<div class="project-title">
+  <!-- Modalità view -->
+   @if (!editing) {
+    <h1 (click)="startEditing()">{{ project.name }}</h1>
+   }
+   @else {
+    <input
+         [(ngModel)]="project.name"
+         (blur)="stopEditing()"
+         (keyup.enter)="stopEditing()"
+         type="text"
+         class="title-input" 
+    />
+   }  
+</div>
+
+
+@for (phase of project.phases; track $index) {
+    <div>
+        <h2>{{phase}}</h2>
+    </div>
+}

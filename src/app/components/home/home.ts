@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/user';
 import { TokenService } from '../../services/token-service/token-service';
 import { UserService } from '../../services/user-service';
@@ -8,7 +8,7 @@ import { ProjectService } from '../../services/project-service/project-service';
 
 @Component({
   selector: 'app-home',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -26,9 +26,9 @@ export class Home {
   passwordChangeSuccess: string = "";
 
   user: Partial<User> = {};
-  projects: Project[] = [];
-  ownedProjects: Project[] = [];
-  starredProjects: Project[] = [];
+  projects: ProjectObject[] = [];
+  ownedProjects: ProjectObject[] = [];
+  starredProjects: ProjectObject[] = [];
 
   async ngOnInit() {
     await this.tokenService.validateTokens();

@@ -1,4 +1,4 @@
-interface Project {
+interface ProjectObject {
   id: string; 
   name: string;
   phases: string[];
@@ -8,4 +8,10 @@ interface Project {
 
 interface CreateProjectRequest {
   name: string;
+}
+
+interface UpdateProjectRequest {
+  name: string | undefined;
+  phases: string[] | undefined;
+  team: string[] | undefined;
 }

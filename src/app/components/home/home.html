@@ -6,9 +6,10 @@
     <h3>Owned by you:</h3>
     @for (project of ownedProjects; track $index) {
     <article>
-        <h4>{{ project.name }}</h4>
-        <p>{{ project.owner }}</p>
-
+        <a routerLink="/project/{{project.id}}">
+            <h4>{{ project.name }}</h4>
+            <p>{{ project.owner }}</p>
+        </a>
     </article>
     }
 
@@ -24,7 +25,7 @@
 
 <section>
     @if (createProjectSuccess) {
-        <p>{{createProjectSuccess}}</p>
+    <p>{{createProjectSuccess}}</p>
     }
     <h2>Create new project</h2>
 
@@ -37,7 +38,7 @@
 
 <section>
     @if (emailChanegSuccess) {
-        <p>{{emailChanegSuccess}}</p>
+    <p>{{emailChanegSuccess}}</p>
     }
     <h2>Change Email</h2>
 
