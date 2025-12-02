@@ -5,3 +5,7 @@ interface Project {
   owner: string;
   team: string[];
 }
+
+interface CreateProjectRequest {
+  name: string;
+}

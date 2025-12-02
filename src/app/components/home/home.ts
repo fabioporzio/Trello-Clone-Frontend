@@ -20,6 +20,7 @@ export class Home {
 
   errorMessage: string = "";
   validationErrors: any[] = [];
+  createProjectSuccess: string = "";
   emailChanegSuccess: string = "";
   usernameChangeSuccess: string = "";
   passwordChangeSuccess: string = "";
@@ -44,8 +45,6 @@ export class Home {
       project.team.includes(this.user.email!) &&
       !this.ownedProjects.some(owned => owned.id === project.id)
     );
-
-
   }
 
   async changeEmail(form: NgForm): Promise<void> {
@@ -99,6 +98,27 @@ export class Home {
 
       this.passwordChangeSuccess = "Password change ok!"
       this.router.navigate(["/login"])
+    }
+    catch (error: any) {
+      console.error(error);
+
+      if (error?.error?.violations) {
+        this.validationErrors = error.error.violations;
+      }
+      else {
+        this.errorMessage = error?.error?.message ?? "Error during password change";
+      }
+    }
+  }
+
+  async createProject(form: NgForm): Promise<void> {
+    await this.tokenService.validateTokens();
+
+    try {
+      const { projectName } = form.value;
+      await this.projectService.createProject(projectName);
+
+      this.createProjectSuccess = "Project Creation ok!"
     }
     catch (error: any) {
       console.error(error);
