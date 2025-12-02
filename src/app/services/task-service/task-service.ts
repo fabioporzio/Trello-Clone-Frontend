@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CreateTaskRequest, Task } from '../../models/task';
+import { CreateTaskRequest, TaskObject } from '../../models/task';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { firstValueFrom } from 'rxjs';
 export class TaskService {
   private readonly http = inject(HttpClient);
   
-  addTask(createTaskRequest: CreateTaskRequest): Promise<Task> {
+  addTask(createTaskRequest: CreateTaskRequest): Promise<TaskObject> {
     const accessToken = localStorage.getItem("access-token")
 
     const headers = new HttpHeaders({
@@ -18,6 +18,30 @@ export class TaskService {
     });
 
     const url = "http://localhost:8080/api/task"; 
-    return firstValueFrom(this.http.post<Task>(url, createTaskRequest, { headers }));
+    return firstValueFrom(this.http.post<TaskObject>(url, createTaskRequest, { headers }));
+  }
+
+  getTasksByProjectId(projectId: string): Promise<TaskObject[]> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/task/project/" + projectId; 
+    return firstValueFrom(this.http.get<TaskObject[]>(url, { headers }));
+  }
+
+  getTaskById(taskId: string): Promise<TaskObject> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/task/" + taskId; 
+    return firstValueFrom(this.http.get<TaskObject>(url, { headers }));
   }
 }

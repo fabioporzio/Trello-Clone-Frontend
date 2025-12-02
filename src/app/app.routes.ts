@@ -3,6 +3,7 @@ import { Login } from './components/login/login';
 import { Registration } from './components/registration/registration';
 import { Home } from './components/home/home';
 import { Project } from './components/project/project';
+import { Task } from './components/task/task';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,11 @@ export const routes: Routes = [
     {
         path: "project/:id",
         component: Project,
-        title: "Progetto" //Fix this to match project's name
+        title: "Project" //Fix this to match project's name, if possible
+    },
+    {
+        path: "task/:id",
+        component: Task,
+        title: "Task" //Fix this to match project's name, if possible
     }
 ];

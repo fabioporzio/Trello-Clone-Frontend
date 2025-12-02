@@ -1,16 +1,16 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ProjectService } from '../../services/project-service/project-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { TaskService } from '../../services/task-service/task-service';
-import { CreateTaskRequest, Task } from '../../models/task';
+import { CreateTaskRequest, TaskObject } from '../../models/task';
 import { UserService } from '../../services/user-service';
 import { ProjectObject, UpdateProjectRequest } from '../../models/project';
 
 @Component({
   selector: 'app-project',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './project.html',
   styleUrl: './project.css',
 })
@@ -28,6 +28,20 @@ export class Project {
 
   user: Partial<User> = {};
   deleteProjectError: string = "";
+  tasks: TaskObject[] = [];
+
+  project: Partial<ProjectObject> = {};
+  async ngOnInit() {
+    const projectId = this.route.snapshot.paramMap.get("id");
+
+    this.project = await this.projectService.getProjectById(projectId!);
+    console.log(this.project)
+
+    this.tasks = await this.taskService.getTasksByProjectId(projectId!)
+
+    this.user = await this.userService.getUser();
+    console.log(this.user)
+  }
 
 
   searchText = '';
@@ -81,20 +95,9 @@ export class Project {
     this.displayNewTeamMemberButton = true;
   }
 
-  project: Partial<ProjectObject> = {};
-  async ngOnInit() {
-    const projectId = this.route.snapshot.paramMap.get("id");
-
-    this.project = await this.projectService.getProjectById(projectId!);
-    console.log(this.project)
-
-    this.user = await this.userService.getUser();
-    console.log(this.user)
-  }
-
   startEditing() {
     this.editing = true;
-    // optional: focus automatico sull'input
+
     setTimeout(() => {
       const input = document.querySelector<HTMLInputElement>('.title-input');
       input?.focus();
@@ -139,7 +142,7 @@ export class Project {
       projectId: this.project.id!
     }
 
-    const newtask: Task = await this.taskService.addTask(createTaskRequest);
+    const newtask: TaskObject = await this.taskService.addTask(createTaskRequest);
     console.log(newtask)
     this.displayAddTaksButton = true;
 

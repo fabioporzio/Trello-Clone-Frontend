@@ -8,7 +8,7 @@ export interface CreateTaskRequest {
   projectId: string; 
 }
 
-export interface Task {
+export interface TaskObject {
   id: string;             
   title: string;
   description: string;

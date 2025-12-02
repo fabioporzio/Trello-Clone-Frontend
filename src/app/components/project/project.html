@@ -40,6 +40,16 @@
     }
 </section>
 
+<section class="tasks-section">
+    <h2>Tasks</h2>
+
+    @for (task of tasks; track $index) {
+        <a routerLink="/task/{{task.id}}">
+            <p>{{task.title}}</p>
+        </a>
+    }
+</section>
+
 <section class="add-team-member">
 
     @if (displayNewTeamMemberButton) {
