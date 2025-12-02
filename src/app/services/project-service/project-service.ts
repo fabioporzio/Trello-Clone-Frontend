@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Project } from '../../components/project/project';
+import { User } from '../../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -71,5 +72,29 @@ export class ProjectService {
 
     const url = "http://localhost:8080/api/projects/" + projectId; 
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
+  }
+
+  addMember(project: UpdateProjectRequest, projectId: string): Promise<ProjectObject> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/projects/" + projectId; 
+    return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
+  }
+
+  loadUsers(): Promise<User[]> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/user/all"; 
+    return firstValueFrom(this.http.get<User[]>(url, { headers }));
   }
 }
