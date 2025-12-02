@@ -18,3 +18,13 @@ export interface TaskObject {
   endDate?: string;       
   projectId: string; 
 }
+
+export interface UpdateTaskRequest {
+  title?: string;          
+  description?: string;    
+  phase?: string;          
+  tags?: string[];         
+  assignees?: string[];    
+  endDate?: string;      
+}
+

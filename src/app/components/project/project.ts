@@ -43,7 +43,6 @@ export class Project {
     console.log(this.user)
   }
 
-
   searchText = '';
   search = signal('');
   selectedUser = signal<string | null>(null);
