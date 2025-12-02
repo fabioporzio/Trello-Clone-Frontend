@@ -1,8 +1,30 @@
 <h1>Welcome {{user.username}}</h1>
 
 <section>
+    <h2>Projects</h2>
+
+    <h3>Owned by you:</h3>
+    @for (project of ownedProjects; track $index) {
+    <article>
+        <h4>{{ project.name }}</h4>
+        <p>{{ project.owner }}</p>
+
+    </article>
+    }
+
+    <h3>Starred in:</h3>
+    @for (project of starredProjects; track $index) {
+    <article>
+        <h4>{{ project.name }}</h4>
+        <p>{{ project.owner }}</p>
+
+    </article>
+    }
+</section>
+
+<section>
     @if (emailChanegSuccess) {
-        <p>{{emailChanegSuccess}}</p>
+    <p>{{emailChanegSuccess}}</p>
     }
     <h2>Change Email</h2>
 
@@ -19,7 +41,7 @@
 
 <section>
     @if (usernameChangeSuccess) {
-        <p>{{usernameChangeSuccess}}</p>
+    <p>{{usernameChangeSuccess}}</p>
     }
     <h2>Change Username</h2>
 
@@ -36,7 +58,7 @@
 
 <section>
     @if (passwordChangeSuccess) {
-        <p>{{passwordChangeSuccess}}</p>
+    <p>{{passwordChangeSuccess}}</p>
     }
     <h2>Change Password</h2>
 
