@@ -29,3 +29,36 @@
     </form>
 </section>
 }
+
+<section class="add-team-member">
+
+    @if (displayNewAssigneesButton) {
+    <button (click)="loadUsers()">Add team member</button>
+    }
+    @else {
+
+    <div class="search-container">
+
+        <input type="text" placeholder="Search by email..." [(ngModel)]="searchText"
+            (ngModelChange)="onSearchChange($event)" />
+
+        @if (searchText && filteredUsers().length > 0) {
+        <ul class="autocomplete">
+            @for (user of filteredUsers(); track user) {
+            <li (click)="selectUser(user)">
+                {{ user }}
+            </li>
+            }
+        </ul>
+        }
+    </div>
+
+    <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
+    }
+
+    @for (teamMember of project.team; track teamMember) {
+    <div>
+        <h2>{{ teamMember }}</h2>
+    </div>
+    }
+</section>

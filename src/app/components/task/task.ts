@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { TaskService } from '../../services/task-service/task-service';
 import { ActivatedRoute } from '@angular/router';
 import { TaskObject, UpdateTaskRequest } from '../../models/task';
@@ -20,6 +20,12 @@ export class Task {
   private readonly userService = inject(UserService);
   private readonly route = inject(ActivatedRoute);
 
+  displayNewAssigneesButton: Boolean = true;
+  searchText = '';
+  search = signal('');
+  selectedUser = signal<string | null>(null);
+  users: string[] = [];
+
   task: Partial<TaskObject> = {};
   project: Partial<ProjectObject> = {}
   user: Partial<User> = {};
@@ -28,6 +34,7 @@ export class Task {
 
     const taskId = this.route.snapshot.paramMap.get("id");
     this.task = await this.taskService.getTaskById(taskId!);
+    console.log(this.task.assignees)
 
     this.project = await this.projectService.getProjectById(this.task.projectId!)
     console.log(this.project)
@@ -64,4 +71,59 @@ export class Task {
       console.log(this.task)
     }
   }
+
+  async loadUsers() {
+    this.users = this.project.team!;
+    this.displayNewAssigneesButton = false;
+  }
+
+  filteredUsers = computed(() =>
+    this.users.filter(
+      u =>
+        u.toLowerCase().includes(this.search().toLowerCase())
+    )
+  );
+
+  onSearchChange(value: string) {
+    this.searchText = value;
+    this.search.set(value);
+    this.selectedUser.set(null);
+  }
+
+  selectUser(email: string) {
+    this.selectedUser.set(email);
+    this.searchText = email;
+    this.search.set('');
+  }
+
+  async addTeamMember() {
+    const user = this.selectedUser();
+
+    if (user) {
+
+      if (!this.task.assignees) {
+        this.task.assignees = [];
+      }
+
+      this.task.assignees.push(user);
+      this.resetInput();
+    }
+
+    console.log(this.task.assignees)
+
+    const updateTaskRequest: UpdateTaskRequest = {
+      assignees: this.task.assignees
+    }
+
+    this.project = await this.taskService.updateTask(updateTaskRequest, this.task.id!);
+    this.displayNewAssigneesButton = true;
+  }
+
+  private resetInput() {
+    this.searchText = '';
+    this.search.set('');
+    this.selectedUser.set(null);
+    this.displayNewAssigneesButton = true;
+  }
+
 }
