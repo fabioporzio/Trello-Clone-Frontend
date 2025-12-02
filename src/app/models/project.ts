@@ -1,4 +1,4 @@
-interface ProjectObject {
+export interface ProjectObject {
   id: string; 
   name: string;
   phases: string[];
@@ -6,11 +6,11 @@ interface ProjectObject {
   team: string[];
 }
 
-interface CreateProjectRequest {
+export interface CreateProjectRequest {
   name: string;
 }
 
-interface UpdateProjectRequest {
+export interface UpdateProjectRequest {
   name: string | undefined;
   phases: string[] | undefined;
   team: string[] | undefined;

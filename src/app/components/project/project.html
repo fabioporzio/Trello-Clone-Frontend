@@ -26,7 +26,7 @@
         <h2>{{phase}}</h2>
 
         @if (displayAddTaksButton) {
-            <button (click)="displayAddTaksButton = false">Add a task</button>
+        <button (click)="displayAddTaksButton = false">Add a task</button>
         }
         @else {
         <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm, phase)">
@@ -72,3 +72,10 @@
     </div>
     }
 </section>
+
+@if (user.email === project.owner ) {
+<section class="delete-project">
+    <h2>Delete project</h2>
+    <button (click)="deleteProject()">Delete</button>
+</section>
+}

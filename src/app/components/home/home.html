@@ -16,9 +16,10 @@
     <h3>Starred in:</h3>
     @for (project of starredProjects; track $index) {
     <article>
-        <h4>{{ project.name }}</h4>
-        <p>{{ project.owner }}</p>
-
+        <a routerLink="/project/{{project.id}}">
+            <h4>{{ project.name }}</h4>
+            <p>{{ project.owner }}</p>
+        </a>
     </article>
     }
 </section>

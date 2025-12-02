@@ -5,6 +5,7 @@ import { TokenService } from '../../services/token-service/token-service';
 import { UserService } from '../../services/user-service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ProjectService } from '../../services/project-service/project-service';
+import { ProjectObject } from '../../models/project';
 
 @Component({
   selector: 'app-home',

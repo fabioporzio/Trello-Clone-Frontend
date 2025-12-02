@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Project } from '../../components/project/project';
 import { User } from '../../models/user';
+import { CreateProjectRequest, ProjectObject, UpdateProjectRequest } from '../../models/project';
 
 @Injectable({
   providedIn: 'root',
@@ -84,6 +84,18 @@ export class ProjectService {
 
     const url = "http://localhost:8080/api/projects/" + projectId; 
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
+  }
+
+  deleteProject(projectId: string): Promise<ProjectObject> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/projects/" + projectId; 
+    return firstValueFrom(this.http.delete<ProjectObject>(url, { headers }));
   }
 
   loadUsers(): Promise<User[]> {

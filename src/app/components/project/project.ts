@@ -1,10 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ProjectService } from '../../services/project-service/project-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { TaskService } from '../../services/task-service/task-service';
 import { CreateTaskRequest, Task } from '../../models/task';
+import { UserService } from '../../services/user-service';
+import { ProjectObject, UpdateProjectRequest } from '../../models/project';
 
 @Component({
   selector: 'app-project',
@@ -14,13 +16,18 @@ import { CreateTaskRequest, Task } from '../../models/task';
 })
 export class Project {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly projectService = inject(ProjectService);
-  private readonly taskService = inject(TaskService)
+  private readonly userService = inject(UserService);
+  private readonly taskService = inject(TaskService);
 
   editing: boolean = false;
   displayNewPhaseButton: Boolean = true;
   displayNewTeamMemberButton: Boolean = true;
   displayAddTaksButton: Boolean = true;
+  
+  user: Partial<User> = {};
+  deleteProjectError: string = "";
 
 
   searchText = '';
@@ -80,6 +87,9 @@ export class Project {
 
     this.project = await this.projectService.getProjectById(projectId!);
     console.log(this.project)
+
+    this.user = await this.userService.getUser();
+    console.log(this.user)
   }
 
   startEditing() {
@@ -138,5 +148,13 @@ export class Project {
   async loadUsers() {
     this.users = await this.projectService.loadUsers()
     this.displayNewTeamMemberButton = false;
+  }
+
+  async deleteProject() {
+    if (this.user.email === this.project.owner) {
+      this.project = await this.projectService.deleteProject(this.project.id!)
+      alert(this.project)
+      await this.router.navigate(["/home"])
+    }
   }
 }
