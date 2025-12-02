@@ -86,6 +86,19 @@ export class ProjectService {
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
   }
 
+  deleteMember(project: UpdateProjectRequest, projectId: string): Promise<ProjectObject> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/projects/" + projectId; 
+    return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
+  }
+  
+
   deleteProject(projectId: string): Promise<ProjectObject> {
     const accessToken = localStorage.getItem("access-token")
 

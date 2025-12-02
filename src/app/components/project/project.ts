@@ -25,7 +25,7 @@ export class Project {
   displayNewPhaseButton: Boolean = true;
   displayNewTeamMemberButton: Boolean = true;
   displayAddTaksButton: Boolean = true;
-  
+
   user: Partial<User> = {};
   deleteProjectError: string = "";
 
@@ -150,10 +150,25 @@ export class Project {
     this.displayNewTeamMemberButton = false;
   }
 
+  async leaveProject() {
+    if (this.user.email !== this.project.owner) {
+
+      this.project.team = this.project.team?.filter(teamMember => teamMember !== this.user.email);
+
+      const updateProjectRequest: UpdateProjectRequest = {
+        name: this.project.name,
+        phases: this.project.phases,
+        team: this.project.team
+      }
+
+      this.project = await this.projectService.deleteMember(updateProjectRequest, this.project.id!)
+      await this.router.navigate(["/home"])
+    }
+  }
+
   async deleteProject() {
     if (this.user.email === this.project.owner) {
       this.project = await this.projectService.deleteProject(this.project.id!)
-      alert(this.project)
       await this.router.navigate(["/home"])
     }
   }
