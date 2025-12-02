@@ -34,14 +34,34 @@ export class Task {
   }
 
   async changePhase(form: NgForm) {
-    const { taskPhase } = form.value;
-    console.log(taskPhase)
+    if (!this.task.assignees || this.task.assignees.length === 0 || this.task.assignees.includes(this.user.email!)) {
+      const { taskPhase } = form.value;
+      console.log(taskPhase)
 
-    const updateTaskRequest: UpdateTaskRequest = {
-      phase: taskPhase
+      const updateTaskRequest: UpdateTaskRequest = {
+        phase: taskPhase
+      }
+
+      this.task = await this.taskService.updateTaskPhase(updateTaskRequest, this.task.id!)
+      console.log(this.task)
     }
+  }
 
-    this.task = await this.taskService.updateTaskPhase(updateTaskRequest, this.task.id!)
-    console.log(this.task)
+  async updateTask(form: NgForm) {
+    if (!this.task.assignees || this.task.assignees.length === 0 || this.task.assignees.includes(this.user.email!)) {
+      const { newTitle, newDescription, newTag } = form.value;
+      console.log(newTitle)
+      console.log(newDescription)
+      console.log(newTag)
+
+      const updateTaskRequest: UpdateTaskRequest = {
+        title: newTitle,
+        description: newDescription,
+        tag: newTag
+      }
+
+      this.task = await this.taskService.updateTask(updateTaskRequest, this.task.id!)
+      console.log(this.task)
+    }
   }
 }

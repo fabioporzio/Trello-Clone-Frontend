@@ -56,4 +56,16 @@ export class TaskService {
     const url = "http://localhost:8080/api/task/" + taskId; 
     return firstValueFrom(this.http.put<TaskObject>(url, updateTaskRequest, { headers }));
   }
+
+  updateTask(updateTaskRequest: UpdateTaskRequest, taskId: string): Promise<TaskObject> {
+    const accessToken = localStorage.getItem("access-token")
+
+    const headers = new HttpHeaders({
+      'Authorization': "Bearer " + accessToken,
+      'Content-Type': 'application/json'
+    });
+
+    const url = "http://localhost:8080/api/task/" + taskId; 
+    return firstValueFrom(this.http.put<TaskObject>(url, updateTaskRequest, { headers }));
+  }
 }

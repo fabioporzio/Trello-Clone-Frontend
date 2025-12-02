@@ -23,8 +23,8 @@ export interface UpdateTaskRequest {
   title?: string;          
   description?: string;    
   phase?: string;          
-  tags?: string[];         
-  assignees?: string[];    
+  tag?: string;         
+  assignees?: string;    
   endDate?: string;      
 }
 

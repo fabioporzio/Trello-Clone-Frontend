@@ -2,17 +2,30 @@
 <p>{{ task.description}}</p>
 
 @if (!task.assignees || task.assignees.length === 0 || task.assignees.includes(this.user.email!)) {
-    <section>
-        <h2>Change Task Phase</h2>
-        <form #changeTaskPhaseForm="ngForm" (ngSubmit)="changePhase(changeTaskPhaseForm)">
-            <select name="taskPhase" id="taskPhase" ngModel required>
-                <option></option>
-                @for (phase of project.phases; track $index) {
-                <option value="{{phase}}">{{phase}}</option>
-                }
-            </select>
+<section>
+    <h2>Change Task Phase</h2>
+    <form #changeTaskPhaseForm="ngForm" (ngSubmit)="changePhase(changeTaskPhaseForm)">
+        <select name="taskPhase" id="taskPhase" ngModel required>
+            <option></option>
+            @for (phase of project.phases; track $index) {
+            <option value="{{phase}}">{{phase}}</option>
+            }
+        </select>
 
-            <button type="submit">Change</button>
-        </form>
-    </section>
+        <button type="submit">Change</button>
+    </form>
+</section>
+}
+
+@if (!task.assignees || task.assignees.length === 0 || task.assignees.includes(this.user.email!)) {
+<section>
+    <h2>Update task</h2>
+    <form #updateTaskForm="ngForm" (ngSubmit)="updateTask(updateTaskForm)">
+        <input name="newTitle" ngModel type="text" placeholder="Task title">
+        <input name="newDescription" ngModel type="text" placeholder="Task Description">
+        <input name="newTag" ngModel type="text" placeholder="Task Tag">
+
+        <button type="submit">Update</button>
+    </form>
+</section>
 }
