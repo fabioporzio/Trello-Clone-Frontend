@@ -1,57 +1,34 @@
 <main class="login-container">
 
     <div class="login-card">
+        <form class="login-form" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
 
-        @if (validationErrors) 
-        {
-            @for (error of validationErrors; track $index) 
-            {
-                <p class="error">{{ error.message }}</p>
-            }   
-        }
-
-        @if (errorMessage)
-        {
-            <p class="error">{{ errorMessage }}</p>   
-        }
-        
-        <form 
-            class="login-form"
-            #loginForm="ngForm" 
-            (ngSubmit)="login(loginForm)">
-            
             <!-- EMAIL -->
             <div class="input-group">
-                <input 
-                    name="email" 
-                    ngModel 
-                    required 
-                    type="email" 
-                    placeholder=" "
-                >
+                <input name="email" ngModel required type="email" placeholder=" ">
                 <label>Email</label>
             </div>
 
             <!-- PASSWORD -->
             <div class="input-group">
-                <input 
-                    name="password" 
-                    ngModel 
-                    required 
-                    type="password" 
-                    placeholder=" "
-                >
+                <input name="password" ngModel required type="password" placeholder=" ">
                 <label>Password</label>
             </div>
 
-            <button type="submit">Login</button>
+            <!-- BUTTON LOGIN -->
+            <button type="submit" [disabled]="isLoading">
+                @if (isLoading) {
+                    <span class="loader"></span>
+                } @else {
+                    Login
+                }
+            </button>
         </form>
 
         <p class="register-link">
-            Non hai un account? 
+            Non hai un account?
             <a routerLink="/register">Registrati</a>
         </p>
-
     </div>
 
 </main>
