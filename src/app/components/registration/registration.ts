@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from '../../services/user-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CreateUserResponse } from '../../models/user';
 
 @Component({
   selector: 'app-registration',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './registration.html',
   styleUrl: './registration.css',
 })
@@ -23,7 +23,7 @@ export class Registration {
       const response: CreateUserResponse = await this.userService.register(email, username, password);
 
       if (response && response.email) {
-        await this.router.navigate(["/login"]);
+        await this.router.navigate(["/"]);
       }
     }
     catch (error: any) {

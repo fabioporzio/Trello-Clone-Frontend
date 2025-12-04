@@ -1,20 +1,57 @@
-<main>
-    @if (validationErrors) 
-    {
-        @for (error of validationErrors; track $index) 
-        {
-            <p class="error">{{ error.message }}</p>
-        }   
-    }
+<main class="login-container">
 
-    @if (errorMessage)
-    {
-        <p class="error">{{ errorMessage }}</p>   
-    }
-    
-    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-        <input name="email" ngModel required type="email" placeholder="Email">
-        <input name="password" ngModel required type="password" placeholder="Password">
-        <button type="submit">Login</button>
-    </form>
+    <div class="login-card">
+
+        @if (validationErrors) 
+        {
+            @for (error of validationErrors; track $index) 
+            {
+                <p class="error">{{ error.message }}</p>
+            }   
+        }
+
+        @if (errorMessage)
+        {
+            <p class="error">{{ errorMessage }}</p>   
+        }
+        
+        <form 
+            class="login-form"
+            #loginForm="ngForm" 
+            (ngSubmit)="login(loginForm)">
+            
+            <!-- EMAIL -->
+            <div class="input-group">
+                <input 
+                    name="email" 
+                    ngModel 
+                    required 
+                    type="email" 
+                    placeholder=" "
+                >
+                <label>Email</label>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="input-group">
+                <input 
+                    name="password" 
+                    ngModel 
+                    required 
+                    type="password" 
+                    placeholder=" "
+                >
+                <label>Password</label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p class="register-link">
+            Non hai un account? 
+            <a routerLink="/register">Registrati</a>
+        </p>
+
+    </div>
+
 </main>

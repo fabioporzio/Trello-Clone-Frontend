@@ -7,7 +7,7 @@ import { Task } from './components/task/task';
 
 export const routes: Routes = [
     {
-        path: "login",
+        path: "",
         component: Login,
         title: "Login Page"
     },
