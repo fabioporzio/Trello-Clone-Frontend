@@ -18,7 +18,7 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects"
+    const url = "http://localhost:8080/api/project"
     return firstValueFrom(this.http.get<ProjectObject[]>(url, { headers }));
   }
 

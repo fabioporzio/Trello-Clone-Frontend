@@ -1,0 +1,22 @@
+<div class="section-card">
+        @if (usernameChangeSuccess) {
+            <p>{{usernameChangeSuccess}}</p>
+        }
+        <h2>Change Username</h2>
+
+        <form #changeUsernameForm="ngForm" (ngSubmit)="changeUsername(changeUsernameForm)">
+            <div class="input-group">
+                <input name="email" ngModel required type="email" placeholder="Email">
+            </div>
+
+            <div class="input-group">
+                <input name="newUsername" ngModel required placeholder="New Username">
+            </div>
+
+            <div class="input-group">
+                <input name="password" ngModel required type="password" placeholder="Password">
+            </div>
+
+            <button type="submit">Change Username</button>
+        </form>
+    </div>

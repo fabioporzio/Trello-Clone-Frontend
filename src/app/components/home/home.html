@@ -1,89 +1,58 @@
-<h1>Welcome {{user.username}}</h1>
+<div class="home-container">
+    <header>
+        <h1>{{user.username}}'s homepage</h1>
+        <nav>
+            <a routerLink="/change-email">Change Email</a>
+            <a routerLink="/change-username">Change Username</a>
+            <a routerLink="/change-password">Change Passowrd</a>
+            <a routerLink="">Logout</a>
+        </nav>
+    </header>
 
-<section>
-    <h2>Projects</h2>
+    <section class="section-card">
+        <h2 class="section-title">Create new project</h2>
 
-    <h3>Owned by you:</h3>
-    @for (project of ownedProjects; track $index) {
-    <article>
-        <a routerLink="/project/{{project.id}}">
-            <h4>{{ project.name }}</h4>
-            <p>{{ project.owner }}</p>
-        </a>
-    </article>
-    }
+        <form #createProjectForm="ngForm" (ngSubmit)="createProject(createProjectForm)">
+            <div class="input-group">
+                <input name="projectName" ngModel required type="text" placeholder="Project name">
+            </div>
 
-    <h3>Starred in:</h3>
-    @for (project of starredProjects; track $index) {
-    <article>
-        <a routerLink="/project/{{project.id}}">
-            <h4>{{ project.name }}</h4>
-            <p>{{ project.owner }}</p>
-        </a>
-    </article>
-    }
-</section>
+            <button type="submit">Create</button>
+        </form>
+    </section>
 
-<section>
-    @if (createProjectSuccess) {
-    <p>{{createProjectSuccess}}</p>
-    }
-    <h2>Create new project</h2>
+    <section class="projects">
+        <div class="owned-projects">
 
-    <form #createProjectForm="ngForm" (ngSubmit)="createProject(createProjectForm)">
-        <input name="projectName" ngModel required type="text" placeholder="Project name">
+            @if (ownedProjects.length > 0) {
+                <h2 class="section-title">Owned projects</h2>
 
-        <button type="submit">Create</button>
-    </form>
-</section>
+                <div class="project-cards-container">
 
-<section>
-    @if (emailChanegSuccess) {
-    <p>{{emailChanegSuccess}}</p>
-    }
-    <h2>Change Email</h2>
+                    @for (project of ownedProjects; track $index) {
+                        <article class="project-card">
+                            <a routerLink="/project/{{project.id}}">
+                                <h4>{{ project.name }}</h4>
+                                <p>{{ project.owner }}</p>
+                            </a>
+                        </article>
+                    }
+                </div>
+                
+            }
+        </div>
 
-    <form #changeEmailForm="ngForm" (ngSubmit)="changeEmail(changeEmailForm)">
-        <input name="email" ngModel required type="email" placeholder="Email">
+            @if (starredProjects.length > 0) {
+            <h3 class="small-muted">Starred in:</h3>
+            @for (project of starredProjects; track $index) {
+            <article class="project-card">
+                <a routerLink="/project/{{project.id}}">
+                    <h4>{{ project.name }}</h4>
+                    <p>{{ project.owner }}</p>
+                </a>
+            </article>
+            }
+            }
 
-        <input name="newEmail" ngModel required placeholder="New Email">
-
-        <input name="password" ngModel required type="password" placeholder="Password">
-
-        <button type="submit">Register</button>
-    </form>
-</section>
-
-<section>
-    @if (usernameChangeSuccess) {
-    <p>{{usernameChangeSuccess}}</p>
-    }
-    <h2>Change Username</h2>
-
-    <form #changeUsernameForm="ngForm" (ngSubmit)="changeUsername(changeUsernameForm)">
-        <input name="email" ngModel required type="email" placeholder="Email">
-
-        <input name="newUsername" ngModel required placeholder="New Username">
-
-        <input name="password" ngModel required type="password" placeholder="Password">
-
-        <button type="submit">Register</button>
-    </form>
-</section>
-
-<section>
-    @if (passwordChangeSuccess) {
-    <p>{{passwordChangeSuccess}}</p>
-    }
-    <h2>Change Password</h2>
-
-    <form #changePasswordForm="ngForm" (ngSubmit)="changePassword(changePasswordForm)">
-        <input name="email" ngModel required type="email" placeholder="Email">
-
-        <input name="currentPassword" ngModel required type="password" placeholder="Current password">
-
-        <input name="newPassword" ngModel required type="password" placeholder="New Password">
-
-        <button type="submit">Register</button>
-    </form>
-</section>
+    </section>
+</div>

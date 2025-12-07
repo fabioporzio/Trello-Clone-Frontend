@@ -1,0 +1,22 @@
+<div class="section-card">
+        @if (emailChanegSuccess) {
+            <p>{{emailChanegSuccess}}</p>
+        }
+        <h2>Change Email</h2>
+
+        <form #changeEmailForm="ngForm" (ngSubmit)="changeEmail(changeEmailForm)">
+            <div class="input-group">
+                <input name="email" ngModel required type="email" placeholder="Email">
+            </div>
+
+            <div class="input-group">
+                <input name="newEmail" ngModel required placeholder="New Email">
+            </div>
+
+            <div class="input-group">
+                <input name="password" ngModel required type="password" placeholder="Password">
+            </div>
+
+            <button type="submit">Change Email</button>
+        </form>
+    </div>

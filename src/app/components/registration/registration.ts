@@ -27,7 +27,7 @@ export class Registration {
 
       if (response && response.email) {
         this.toastr.success('Registrazione completata!', 'Successo');
-        await this.router.navigate(['/login']);
+        await this.router.navigate(['']);
       }
 
     } catch (error: any) {
