@@ -7,48 +7,184 @@
 .home-container {
     min-height: 100vh;
     width: 100%;
-    background: linear-gradient(90deg, #0066ff, #7b2ff7);
-    font-family: Inter, Segoe UI, sans-serif;
-    padding: 20px;
+    background: linear-gradient(90deg, #0b4df2 0%, #6f2cf0 100%);
+    font-family: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial;
+    padding: 28px 20px;
+    color: #fff;
 }
 
 header {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
 }
 
 nav {
-    width: 60%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+}
+
+.form-title {
+    font-size: 22px;
+    color: black;
+    margin-bottom: 12px;
 }
 
 .section-title {
-    font-size: 26px;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 12px;
 }
 
 .owned-projects {
     width: 100%;
 }
 
-.project-cards-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.starred-projects {
+    width: 100%;
+}
 
+.project-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    align-items: start;
 }
 
 .project-card {
-    border: 1px solid black;
-    border-radius: 10px;
-
+    background: rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 6px 18px rgba(11, 77, 242, 0.12);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    min-height: 100px;
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.project-card a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+.project-card h4 {
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.project-card p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.78);
+    margin: 0;
+}
+
+.project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(11, 77, 242, 0.18);
+    background: rgba(255,255,255,0.12);
+}
+
+.section-card {
+    background: rgba(255,255,255,0.95);
+    color: #0f1724;
+    border-radius: 12px;
+    padding: 18px;
+    max-width: 700px;
+    box-shadow: 0 8px 30px rgba(15,23,36,0.08);
+    margin-bottom: 20px;
+}
+
+.section-card form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.section-card .input-group input {
+    flex: 1 1 auto;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(15,23,36,0.07);
+    font-size: 14px;
+}
+
+.section-card button[type="submit"] {
+    background: linear-gradient(90deg,#0066ff,#7b2ff7);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.section-card button[type="submit"]:hover {
+    filter: brightness(1.03);
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.small-muted {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+header h1 {
+    font-size: 20px;
+    color: #fff;
+}
+
+nav a {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background 140ms ease, transform 120ms ease;
+}
+
+nav a:hover {
+    background: rgba(255,255,255,0.16);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 720px) {
+    .project-cards-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 420px) {
+    .project-cards-container {
+        grid-template-columns: 1fr;
+    }
+    .section-card {
+        padding: 14px;
+    }
 }

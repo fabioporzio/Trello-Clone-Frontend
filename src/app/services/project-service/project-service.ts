@@ -30,11 +30,11 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects/" + projectId;
+    const url = "http://localhost:8080/api/project/" + projectId;
     return firstValueFrom(this.http.get<ProjectObject>(url, { headers }));
   }
 
-  createProject(projectName: string): Promise<void> {
+  createProject(projectName: string): Promise<ProjectObject> {
     const createProjectRequest: CreateProjectRequest = {
       name: projectName
     }
@@ -46,8 +46,8 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects"
-    return firstValueFrom(this.http.post<void>(url, createProjectRequest, { headers }));
+    const url = "http://localhost:8080/api/project"
+    return firstValueFrom(this.http.post<ProjectObject>(url, createProjectRequest, { headers }));
   }
 
   updateProjectName(project: UpdateProjectRequest, projectId: string): Promise<ProjectObject> {
@@ -58,7 +58,7 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects/" + projectId; 
+    const url = "http://localhost:8080/api/project/" + projectId; 
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
   }
 
@@ -70,7 +70,7 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects/" + projectId; 
+    const url = "http://localhost:8080/api/project/" + projectId; 
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
   }
 
@@ -82,7 +82,7 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects/" + projectId; 
+    const url = "http://localhost:8080/api/project/" + projectId; 
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
   }
 
@@ -94,7 +94,7 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects/" + projectId; 
+    const url = "http://localhost:8080/api/project/" + projectId; 
     return firstValueFrom(this.http.put<ProjectObject>(url, project, { headers }));
   }
   
@@ -107,7 +107,7 @@ export class ProjectService {
       'Content-Type': 'application/json'
     });
 
-    const url = "http://localhost:8080/api/projects/" + projectId; 
+    const url = "http://localhost:8080/api/project/" + projectId; 
     return firstValueFrom(this.http.delete<ProjectObject>(url, { headers }));
   }
 

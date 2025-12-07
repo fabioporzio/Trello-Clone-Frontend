@@ -6,6 +6,7 @@ import { UserService } from '../../services/user-service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ProjectService } from '../../services/project-service/project-service';
 import { ProjectObject } from '../../models/project';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ export class Home {
   private readonly tokenService = inject(TokenService);
   private readonly userService = inject(UserService);
   private readonly projectService = inject(ProjectService);
+  private readonly toastr = inject(ToastrService);
   private readonly router = inject(Router);
 
   errorMessage: string = "";
@@ -52,18 +54,23 @@ export class Home {
 
     try {
       const { projectName } = form.value;
-      await this.projectService.createProject(projectName);
+      const newProject = await this.projectService.createProject(projectName);
+      this.ownedProjects.push(newProject)
 
-      this.createProjectSuccess = "Project Creation ok!"
+      if (newProject) {
+        this.toastr.success('Project creation was successful', 'Success');
+      }
     }
     catch (error: any) {
       console.error(error);
 
       if (error?.error?.violations) {
-        this.validationErrors = error.error.violations;
+        error.error.violations.forEach((v: any) => {
+          this.toastr.error(v.message, 'Error');
+        });
       }
       else {
-        this.errorMessage = error?.error?.message ?? "Error during password change";
+        this.toastr.error(error?.error?.message ?? 'Error during project creation', 'Error');
       }
     }
   }

@@ -10,7 +10,7 @@
     </header>
 
     <section class="section-card">
-        <h2 class="section-title">Create new project</h2>
+        <h2 class="form-title">Create new project</h2>
 
         <form #createProjectForm="ngForm" (ngSubmit)="createProject(createProjectForm)">
             <div class="input-group">
@@ -42,17 +42,24 @@
             }
         </div>
 
-            @if (starredProjects.length > 0) {
-            <h3 class="small-muted">Starred in:</h3>
-            @for (project of starredProjects; track $index) {
-            <article class="project-card">
-                <a routerLink="/project/{{project.id}}">
-                    <h4>{{ project.name }}</h4>
-                    <p>{{ project.owner }}</p>
-                </a>
-            </article>
-            }
-            }
+        <div class="starred-projects">
 
+            @if (starredProjects.length > 0) {
+                <h2 class="section-title">Owned projects</h2>
+
+                <div class="project-cards-container">
+
+                    @for (project of starredProjects; track $index) {
+                        <article class="project-card">
+                            <a routerLink="/project/{{project.id}}">
+                                <h4>{{ project.name }}</h4>
+                                <p>{{ project.owner }}</p>
+                            </a>
+                        </article>
+                    }
+                </div>
+                
+            }
+        </div>
     </section>
 </div>
