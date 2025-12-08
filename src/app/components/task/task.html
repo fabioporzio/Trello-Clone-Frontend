@@ -1,64 +1,110 @@
-<h1>{{ task.title }}</h1>
-<p>{{ task.description}}</p>
+<main>
+    <h1>{{ task.title }}</h1>
+    <p>{{ task.description}}</p>
+    <p>{{ task.phase }}</p>
 
-@if (!task.assignees || task.assignees.length === 0 || task.assignees.includes(this.user.email!)) {
-<section>
-    <h2>Change Task Phase</h2>
-    <form #changeTaskPhaseForm="ngForm" (ngSubmit)="changePhase(changeTaskPhaseForm)">
-        <select name="taskPhase" id="taskPhase" ngModel required>
-            <option></option>
-            @for (phase of project.phases; track $index) {
-            <option value="{{phase}}">{{phase}}</option>
-            }
-        </select>
+    @if (!task.assignees || task.assignees.length === 0 || task.assignees.includes(this.user.email!)) {
+    <section>
+        <h2>Change Task Phase</h2>
+        <form #changeTaskPhaseForm="ngForm" (ngSubmit)="changePhase(changeTaskPhaseForm)">
+            <select name="taskPhase" id="taskPhase" ngModel required>
+                <option></option>
+                @for (phase of project.phases; track $index) {
+                <option value="{{phase}}">{{phase}}</option>
+                }
+            </select>
 
-        <button type="submit">Change</button>
-    </form>
-</section>
-}
-
-@if (!task.assignees || task.assignees.length === 0 || task.assignees.includes(this.user.email!)) {
-<section>
-    <h2>Update task</h2>
-    <form #updateTaskForm="ngForm" (ngSubmit)="updateTask(updateTaskForm)">
-        <input name="newTitle" ngModel type="text" placeholder="Task title">
-        <input name="newDescription" ngModel type="text" placeholder="Task Description">
-        <input name="newTag" ngModel type="text" placeholder="Task Tag">
-
-        <button type="submit">Update</button>
-    </form>
-</section>
-}
-
-<section class="add-team-member">
-
-    @if (displayNewAssigneesButton) {
-    <button (click)="loadUsers()">Add team member</button>
+            <button type="submit">Change</button>
+        </form>
+    </section>
     }
-    @else {
 
-    <div class="search-container">
+    @if (!task.assignees || task.assignees.length === 0 || task.assignees.includes(this.user.email!)) {
+    <section>
+        <h2>Update task</h2>
+        <form #updateTaskForm="ngForm" (ngSubmit)="updateTask(updateTaskForm)">
+            <input name="newTitle" ngModel type="text" placeholder="Task title">
+            <input name="newDescription" ngModel type="text" placeholder="Task Description">
+            <input name="newTag" ngModel type="text" placeholder="Task Tag">
 
-        <input type="text" placeholder="Search by email..." [(ngModel)]="searchText"
-            (ngModelChange)="onSearchChange($event)" />
+            <button type="submit">Update</button>
+        </form>
+    </section>
+    }
 
-        @if (searchText && filteredUsers().length > 0) {
-        <ul class="autocomplete">
-            @for (user of filteredUsers(); track user) {
-            <li (click)="selectUser(user)">
-                {{ user }}
-            </li>
-            }
-        </ul>
+    <section class="add-team-member">
+        <h2>Add team member</h2>
+        @if (displayNewAssigneesButton) {
+        <button (click)="loadUsers()">Add team member</button>
         }
-    </div>
+        @else {
 
-    <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
-    }
+        <div class="search-container">
 
-    @for (teamMember of project.team; track teamMember) {
-    <div>
-        <h2>{{ teamMember }}</h2>
-    </div>
+            <input type="text" placeholder="Search by email..." [(ngModel)]="searchText"
+                (ngModelChange)="onSearchChange($event)" />
+
+            @if (searchText && filteredUsers().length > 0) {
+            <ul class="autocomplete">
+                @for (user of filteredUsers(); track user) {
+                <li (click)="selectUser(user)">
+                    {{ user }}
+                </li>
+                }
+            </ul>
+            }
+        </div>
+
+        <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
+        }
+
+
+        @if (task.assignees && task.assignees.length > 0) {
+        <h2>Assignees</h2>
+        @for (assignee of task.assignees; track assignee) {
+        <p>{{ assignee }}</p>
+        }
+        }
+        @else {
+        <h2>No assignees for this task</h2>
+        }
+
+    </section>
+
+    <section class="add-tag">
+        <form #addTagForm="ngForm" (ngSubmit)="addTag(addTagForm)">
+            <input name="newTag" ngModel required type="text" placeholder="Insert new tag name">
+
+            <button type="submit">Add Tag</button>
+        </form>
+
+        @if (task.tags && task.tags.length > 0) {
+        <h2>Tags</h2>
+            @for (tag of task.tags; track $index) {
+                <p>{{ tag }}</p>
+            }
+        }
+        @else {
+        <h2>No tags for this task</h2>
+        }
+    </section>
+
+    @if (task.assignees && task.assignees.length > 0) {
+        <section class="add-end-date">
+            <h2>Add an end date</h2>
+            <form #addEndDateForm="ngForm" (ngSubmit)="addEndDate(addEndDateForm)">
+                <input name="endDate" ngModel required type="datetime-local" placeholder="Insert end date">
+
+                <button type="submit">Add End Date</button>
+            </form>
+
+            @if (task.endDate) {
+                <h2>End Date</h2>
+                <p>{{ displayedDate }}</p>
+            }
+            @else {
+                <h2>No end date for this task</h2>
+            }
+        </section>
     }
-</section>
+</main>

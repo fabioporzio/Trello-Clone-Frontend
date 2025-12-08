@@ -28,7 +28,7 @@
                 <select name="taskPhase" ngModel required>
                     <option>Select a Phase</option>
                     @for (phase of project.phases; track $index) {
-                        <option value="{{phase}}">{{phase}}</option>
+                    <option value="{{phase}}">{{phase}}</option>
                     }
                 </select>
 
@@ -79,11 +79,20 @@
         <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
         }
 
-        @for (teamMember of project.team; track teamMember) {
         <div>
+            <h2>Current Team</h2>
+            @for (teamMember of project.team; track teamMember) {
             <h2>{{ teamMember }}</h2>
+            }
         </div>
-        }
+
+        <div>
+            <h2>Invited users</h2>
+            @for (invitedUser of project.invitedUsers; track invitedUser) {
+            <h2>{{ invitedUser }}</h2>
+            }
+        </div>
+
     </section>
 
     @if (user.email !== project.owner ) {

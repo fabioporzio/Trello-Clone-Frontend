@@ -29,12 +29,17 @@ export class Task {
   task: Partial<TaskObject> = {};
   project: Partial<ProjectObject> = {}
   user: Partial<User> = {};
+  displayedDate: string = "";
   async ngOnInit() {
     this.user = await this.userService.getUser();
 
     const taskId = this.route.snapshot.paramMap.get("id");
     this.task = await this.taskService.getTaskById(taskId!);
-    console.log(this.task.assignees)
+    if (this.task.endDate) {
+      const formattedDate = new Date(this.task.endDate)
+      this.displayedDate = this.toDatetimeLocalString(formattedDate)
+    }
+    console.log(this.task)
 
     this.project = await this.projectService.getProjectById(this.task.projectId!)
     console.log(this.project)
@@ -64,7 +69,7 @@ export class Task {
       const updateTaskRequest: UpdateTaskRequest = {
         title: newTitle,
         description: newDescription,
-        tag: newTag
+        tags: newTag
       }
 
       this.task = await this.taskService.updateTask(updateTaskRequest, this.task.id!)
@@ -119,11 +124,74 @@ export class Task {
     this.displayNewAssigneesButton = true;
   }
 
+  async addTag(form: NgForm) {
+    const { newTag } = form.value;
+    console.log("New tag: " + newTag)
+
+    if (!this.task.tags) {
+      this.task.tags = [];
+    }
+
+    this.task.tags.push(newTag)
+
+    const updateTaskRequest: UpdateTaskRequest = {
+      tags: this.task.tags
+    }
+    console.log(updateTaskRequest)
+
+    const response = await this.taskService.updateTask(updateTaskRequest, this.task.id!)
+    console.log(response)
+  }
+
+  async addEndDate(form: NgForm) {
+    const localString = form.value.endDate;
+
+    const date = new Date(localString);
+    const isoWithTimezone = this.toIsoWithTimezone(date);
+
+    console.log("Formatted:", isoWithTimezone);
+    this.task.endDate = isoWithTimezone;
+
+    const updateTaskRequest: UpdateTaskRequest = {
+      endDate: this.task.endDate
+    }
+    console.log(updateTaskRequest)
+
+    const response = await this.taskService.updateTask(updateTaskRequest, this.task.id!)
+    console.log(response)
+  }
+
   private resetInput() {
     this.searchText = '';
     this.search.set('');
     this.selectedUser.set(null);
     this.displayNewAssigneesButton = true;
+  }
+
+  private toIsoWithTimezone(d: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+
+    const year = d.getFullYear();
+    const month = pad(d.getMonth() + 1);
+    const day = pad(d.getDate());
+    const hours = pad(d.getHours());
+    const minutes = pad(d.getMinutes());
+    const seconds = pad(d.getSeconds());
+    const millis = d.getMilliseconds().toString().padStart(3, '0');
+
+    const offset = -d.getTimezoneOffset(); // es: 60
+    const sign = offset >= 0 ? '+' : '-';
+    const absOffset = Math.abs(offset);
+    const offsetHours = pad(Math.floor(absOffset / 60));
+    const offsetMin = pad(absOffset % 60);
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${millis}${sign}${offsetHours}:${offsetMin}`;
+  }
+
+  private toDatetimeLocalString(date: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
 
 }

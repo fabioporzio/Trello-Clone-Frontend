@@ -27,7 +27,7 @@ export interface UpdateTaskRequest {
   title?: string;          
   description?: string;    
   phase?: string;          
-  tag?: string;         
+  tags?: string[];         
   assignees?: string[];    
   endDate?: string;      
 }
