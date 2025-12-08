@@ -1,98 +1,102 @@
-<div class="project-title">
-    <!-- Modalità view -->
-    @if (!editing) {
-    <h1 (click)="startEditing()">{{ project.name }}</h1>
-    }
-    @else {
-    <input [(ngModel)]="project.name" (blur)="stopEditing()" (keyup.enter)="stopEditing()" type="text"
-        class="title-input" />
-    }
-</div>
-
-<section class="phases">
-    @if (displayNewPhaseButton) {
-    <button (click)="displayNewPhaseButton = false">Add a phase</button>
-    }
-    @else {
-    <form #addPhaseForm="ngForm" (ngSubmit)="addPhase(addPhaseForm)">
-        <input name="newPhase" ngModel required type="text" placeholder="Phase name">
-
-        <button type="submit">Add</button>
-    </form>
-    }
-
-    @for (phase of project.phases; track $index) {
-    <div>
-        <h2>{{phase}}</h2>
-
-        @if (displayAddTaksButton) {
-        <button (click)="displayAddTaksButton = false">Add a task</button>
+<main>
+    <div class="project-title">
+        <!-- Modalità view -->
+        @if (!editing) {
+        <h1 (click)="startEditing()">{{ project.name }}</h1>
         }
         @else {
-        <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm, phase)">
-            <input name="taskTitle" ngModel required type="text" placeholder="Task title">
-            <input name="taskDescription" ngModel required type="text" placeholder="Task description">
-
-            <button type="submit">Add</button>
-        </form>
+        <input [(ngModel)]="project.name" (blur)="stopEditing()" (keyup.enter)="stopEditing()" type="text"
+            class="title-input" />
         }
     </div>
-    }
-</section>
 
-<section class="tasks-section">
-    <h2>Tasks</h2>
+    <section class="add-forms">
+        <div class="add-phase">
+            <h2>Add Phase</h2>
+            <form #addPhaseForm="ngForm" (ngSubmit)="addPhase(addPhaseForm)">
+                <input name="newPhase" ngModel required type="text" placeholder="Phase name">
 
-    @for (task of tasks; track $index) {
-        <a routerLink="/task/{{task.id}}">
-            <p>{{task.title}}</p>
-        </a>
-    }
-</section>
+                <button type="submit">Add</button>
+            </form>
+        </div>
 
-<section class="add-team-member">
+        <div class="add-task">
+            <h2>Add Task to Phase</h2>
+            <form #addTaskForm="ngForm" (ngSubmit)="addTask(addTaskForm)">
+                <input name="taskTitle" ngModel required type="text" placeholder="Task title">
+                <input name="taskDescription" ngModel required type="text" placeholder="Task description">
+                <select name="taskPhase" ngModel required>
+                    <option>Select a Phase</option>
+                    @for (phase of project.phases; track $index) {
+                        <option value="{{phase}}">{{phase}}</option>
+                    }
+                </select>
 
-    @if (displayNewTeamMemberButton) {
-    <button (click)="loadUsers()">Add team member</button>
-    }
-    @else {
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </section>
 
-    <div class="search-container">
+    <section class="phases">
+        @for (phase of project.phases; track $index) {
+        <div>
+            <h2>{{ phase }}</h2>
 
-        <input type="text" placeholder="Search by email..." [(ngModel)]="searchText"
-            (ngModelChange)="onSearchChange($event)" />
-
-        @if (searchText && filteredUsers().length > 0) {
-        <ul class="autocomplete">
-            @for (user of filteredUsers(); track user) {
-            <li (click)="selectUser(user.email)">
-                {{ user.email }}
-            </li>
+            @for (task of tasks[phase]; track $index) {
+            <div>
+                <a routerLink="/task/{{task.id}}">
+                    {{ task.title }}
+                </a>
+            </div>
             }
-        </ul>
+        </div>
         }
-    </div>
+    </section>
 
-    <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
-    }
+    <section class="add-team-member">
 
-    @for (teamMember of project.team; track teamMember) {
-    <div>
-        <h2>{{ teamMember }}</h2>
-    </div>
-    }
-</section>
+        @if (displayNewTeamMemberButton) {
+        <button (click)="loadUsers()">Add team member</button>
+        }
+        @else {
 
-@if (user.email !== project.owner ) {
+        <div class="search-container">
+
+            <input type="text" placeholder="Search by email..." [(ngModel)]="searchText"
+                (ngModelChange)="onSearchChange($event)" />
+
+            @if (searchText && filteredUsers().length > 0) {
+            <ul class="autocomplete">
+                @for (user of filteredUsers(); track user) {
+                <li (click)="selectUser(user.email)">
+                    {{ user.email }}
+                </li>
+                }
+            </ul>
+            }
+        </div>
+
+        <button (click)="addTeamMember()" [disabled]="!selectedUser()">Add</button>
+        }
+
+        @for (teamMember of project.team; track teamMember) {
+        <div>
+            <h2>{{ teamMember }}</h2>
+        </div>
+        }
+    </section>
+
+    @if (user.email !== project.owner ) {
     <section class="leave-project">
         <h2>Leave project</h2>
         <button (click)="leaveProject()">Leave</button>
     </section>
-}
+    }
 
-@if (user.email === project.owner ) {
+    @if (user.email === project.owner ) {
     <section class="delete-project">
         <h2>Delete project</h2>
         <button (click)="deleteProject()">Delete</button>
     </section>
-}
+    }
+</main>

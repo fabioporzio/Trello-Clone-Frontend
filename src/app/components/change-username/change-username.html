@@ -1,7 +1,5 @@
-<div class="section-card">
-        @if (usernameChangeSuccess) {
-            <p>{{usernameChangeSuccess}}</p>
-        }
+<main>
+    <div class="section-card">
         <h2>Change Username</h2>
 
         <form #changeUsernameForm="ngForm" (ngSubmit)="changeUsername(changeUsernameForm)">
@@ -20,3 +18,4 @@
             <button type="submit">Change Username</button>
         </form>
     </div>
+</main>

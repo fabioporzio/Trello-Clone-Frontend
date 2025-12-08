@@ -1,0 +1,288 @@
+
+/* Project component styles — modern, responsive, and cohesive with home styles */
+
+main {
+	padding: 28px;
+	min-height: 100vh;
+	background: linear-gradient(90deg, #0b4df2 0%, #6f2cf0 100%);
+	font-family: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial;
+	color: #0f1724;
+}
+
+.project-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 18px;
+}
+
+.project-title h1 {
+	font-size: 24px;
+	color: #fff;
+	cursor: pointer;
+	margin: 0;
+	letter-spacing: -0.2px;
+}
+
+.title-input {
+	font-size: 18px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid rgba(15,23,36,0.12);
+	width: 100%;
+	max-width: 720px;
+	background: #fff;
+}
+
+.phases {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 16px;
+	align-items: start;
+	margin-top: 12px;
+}
+
+.phases > div {
+	background: rgba(255,255,255,0.95);
+	border-radius: 12px;
+	padding: 16px;
+	box-shadow: 0 12px 30px rgba(2,6,23,0.08);
+}
+
+.phases h2 {
+	margin: 0 0 10px 0;
+	font-size: 17px;
+	color: #0f1724;
+}
+
+.phases button,
+.phases form button,
+.add-team-member > button,
+.leave-project button,
+.delete-project button {
+	background: linear-gradient(90deg,#0066ff,#7b2ff7);
+	color: #fff;
+	border: none;
+	padding: 9px 14px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 700;
+	box-shadow: 0 6px 18px rgba(11,77,242,0.12);
+	transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.phases form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.phases input[type="text"] {
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid rgba(15,23,36,0.08);
+	background: #fff;
+}
+
+.add-forms {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	margin-top: 12px;
+}
+
+.add-forms .add-phase,
+.add-forms .add-task {
+	background: rgba(255,255,255,0.95);
+	padding: 14px;
+	border-radius: 10px;
+	box-shadow: 0 10px 24px rgba(2,6,23,0.06);
+}
+
+.add-forms h2 {
+	margin: 0 0 10px 0;
+	font-size: 16px;
+	color: #0f1724;
+}
+
+.add-forms select {
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid rgba(15,23,36,0.08);
+	background: #fff;
+}
+
+/* Ensure inputs and buttons inside the add-forms block match app styling */
+.add-forms input[type="text"],
+.add-forms input[type="email"],
+.add-forms textarea {
+	width: 100%;
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid rgba(15,23,36,0.08);
+	background: #fff;
+	font-size: 14px;
+}
+
+.add-forms ::placeholder {
+	color: rgba(15,23,36,0.45);
+}
+
+.add-forms button,
+.add-forms .add-phase button,
+.add-forms .add-task button,
+.add-forms form button {
+	background: linear-gradient(90deg,#0066ff,#7b2ff7);
+	color: #fff;
+	border: none;
+	padding: 9px 14px;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 700;
+	box-shadow: 0 6px 18px rgba(11,77,242,0.12);
+	transition: transform 120ms ease, box-shadow 120ms ease;
+	align-self: start;
+}
+
+.add-forms button:hover,
+.add-forms form button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 18px 36px rgba(11,77,242,0.14);
+}
+
+/* Make add-forms stack on small screens and ensure buttons are easy to tap */
+@media (max-width: 520px) {
+	.add-forms {
+		grid-template-columns: 1fr;
+	}
+
+	.add-forms button,
+	.add-forms form button {
+		width: 100%;
+	}
+}
+
+.tasks-section {
+	margin-top: 20px;
+	background: rgba(255,255,255,0.95);
+	padding: 14px;
+	border-radius: 10px;
+	box-shadow: 0 10px 24px rgba(2,6,23,0.06);
+}
+
+.tasks-section h2 {
+	margin: 0 0 10px 0;
+	color: #0f1724;
+}
+
+.tasks-section a {
+	display: block;
+	text-decoration: none;
+	color: #0f1724;
+	padding: 10px 12px;
+	border-radius: 8px;
+	transition: background 120ms ease, transform 120ms ease;
+}
+
+.tasks-section a:hover {
+	background: rgba(11,77,242,0.06);
+	transform: translateY(-2px);
+}
+
+.add-team-member {
+	margin-top: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.search-container {
+	position: relative;
+	width: 320px;
+	max-width: 100%;
+}
+
+.search-container input[type="text"] {
+	width: 100%;
+	padding: 10px 12px;
+	border-radius: 8px;
+	border: 1px solid rgba(15,23,36,0.08);
+}
+
+.autocomplete {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-top: 6px;
+	background: #fff;
+	color: #0f1724;
+	border-radius: 8px;
+	box-shadow: 0 8px 20px rgba(2,6,23,0.12);
+	list-style: none;
+	padding: 6px 8px;
+	max-height: 160px;
+	overflow: auto;
+	z-index: 30;
+}
+
+.autocomplete li {
+	padding: 8px 10px;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+.autocomplete li:hover {
+	background: rgba(11,77,242,0.06);
+}
+
+.add-team-member > button[disabled] {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.leave-project,
+.delete-project {
+	margin-top: 14px;
+	background: rgba(255,255,255,0.95);
+	padding: 12px;
+	border-radius: 10px;
+	box-shadow: 0 8px 18px rgba(2,6,23,0.06);
+}
+
+.delete-project button {
+	background: #ff4d4f;
+}
+
+@media (max-width: 720px) {
+	.phases {
+		grid-template-columns: 1fr;
+	}
+
+	.project-title {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.add-forms {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Focus states for accessibility */
+input:focus, select:focus, .title-input:focus, button:focus {
+	outline: 3px solid rgba(11,77,242,0.14);
+	outline-offset: 2px;
+}
+
+/* Button hover */
+.phases button:hover,
+.phases form button:hover,
+.add-team-member > button:hover,
+.leave-project button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 18px 36px rgba(11,77,242,0.14);
+}
+
+

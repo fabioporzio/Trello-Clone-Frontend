@@ -1,0 +1,149 @@
+
+/* Change Username styles — consistent with Login / Change Email / Change Password */
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(90deg, #0066ff, #7b2ff7);
+	font-family: Inter, 'Segoe UI', sans-serif;
+	padding: 20px;
+}
+
+.section-card {
+	background: white;
+	padding: 36px 30px;
+	width: 100%;
+	max-width: 520px;
+	border-radius: 14px;
+	box-shadow: 0 18px 48px rgba(0,0,0,0.18);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; transform: translateY(8px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.section-card h2 {
+	font-size: 20px;
+	color: #0f1724;
+}
+
+.section-card form {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.input-group {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.input-group input {
+	height: 48px;
+	padding: 14px 12px;
+	border-radius: 10px;
+	border: 1px solid #e6e6e6;
+	font-size: 15px;
+	outline: none;
+	color: #0f1724;
+	background: #fff;
+	width: 100%;
+}
+
+.input-group input::placeholder {
+	color: rgba(15,23,36,0.45);
+}
+
+.input-group label {
+	position: absolute;
+	left: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 13px;
+	color: #6b7280;
+	pointer-events: none;
+	transition: 0.22s;
+	padding: 0 6px;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+	top: 2px;
+	font-size: 12px;
+	background-color: white;
+}
+
+.input-group input:focus {
+	border-color: #000;
+}
+
+button {
+	margin-top: 6px;
+	height: 48px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	background: black;
+	color: white;
+	font-weight: 600;
+	font-size: 15px;
+	letter-spacing: 0.4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+button:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.loader {
+	width: 18px;
+	height: 18px;
+	border: 2px solid white;
+	border-top: 2px solid transparent;
+	border-radius: 50%;
+	animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+.error {
+	color: #b91c1c;
+	font-size: 13px;
+	text-align: center;
+}
+
+@media (max-width: 520px) {
+	.section-card {
+		padding: 22px;
+		border-radius: 12px;
+	}
+
+	.input-group input,
+	button {
+		height: 44px;
+		font-size: 14px;
+	}
+}
+

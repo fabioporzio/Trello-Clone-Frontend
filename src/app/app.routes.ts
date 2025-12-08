@@ -45,7 +45,7 @@ export const routes: Routes = [
         title: "Change Username Page"
     },
     {
-        path: "change-email",
+        path: "change-password",
         component: ChangePassword,
         title: "Change Password Page"
     }

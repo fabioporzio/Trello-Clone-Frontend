@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { TaskService } from '../../services/task-service/task-service';
-import { CreateTaskRequest, TaskObject } from '../../models/task';
+import { CreateTaskRequest, TaskMap, TaskObject } from '../../models/task';
 import { UserService } from '../../services/user-service';
 import { ProjectObject, UpdateProjectRequest } from '../../models/project';
 
@@ -28,7 +28,7 @@ export class Project {
 
   user: Partial<User> = {};
   deleteProjectError: string = "";
-  tasks: TaskObject[] = [];
+  tasks: TaskMap = {};
 
   project: Partial<ProjectObject> = {};
   async ngOnInit() {
@@ -38,6 +38,7 @@ export class Project {
     console.log(this.project)
 
     this.tasks = await this.taskService.getTasksByProjectId(projectId!)
+    console.log(this.tasks)
 
     this.user = await this.userService.getUser();
     console.log(this.user)
@@ -47,7 +48,6 @@ export class Project {
   search = signal('');
   selectedUser = signal<string | null>(null);
   users: User[] = [];
-
 
   filteredUsers = computed(() =>
     this.users.filter(
@@ -131,13 +131,13 @@ export class Project {
     this.displayNewPhaseButton = true;
   }
 
-  async addTask(form: NgForm, phase: string) {
-    const { taskTitle, taskDescription } = form.value;
+  async addTask(form: NgForm) {
+    const { taskTitle, taskDescription, taskPhase } = form.value;
 
     const createTaskRequest: CreateTaskRequest = {
       title: taskTitle,
       description: taskDescription,
-      phase: phase,
+      phase: taskPhase,
       projectId: this.project.id!
     }
 

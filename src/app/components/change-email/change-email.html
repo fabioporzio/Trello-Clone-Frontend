@@ -1,7 +1,5 @@
-<div class="section-card">
-        @if (emailChanegSuccess) {
-            <p>{{emailChanegSuccess}}</p>
-        }
+<main>
+    <div class="section-card">
         <h2>Change Email</h2>
 
         <form #changeEmailForm="ngForm" (ngSubmit)="changeEmail(changeEmailForm)">
@@ -20,3 +18,4 @@
             <button type="submit">Change Email</button>
         </form>
     </div>
+</main>

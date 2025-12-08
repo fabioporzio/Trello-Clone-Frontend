@@ -8,6 +8,10 @@ export interface CreateTaskRequest {
   projectId: string; 
 }
 
+export interface TaskMap {
+  [phase: string]: TaskObject[];
+}
+
 export interface TaskObject {
   id: string;             
   title: string;
