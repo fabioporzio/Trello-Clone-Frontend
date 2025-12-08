@@ -73,14 +73,14 @@ export class Project {
     const user = this.selectedUser();
 
     if (user) {
-      this.project.team?.push(user);
+      this.project.invitedUsers?.push(user);
       this.resetInput();
     }
 
     const updateProjectRequest: UpdateProjectRequest = {
       name: this.project.name,
       phases: this.project.phases,
-      team: this.project.team
+      invitedUsers: this.project.invitedUsers
     }
 
     this.project = await this.projectService.addMember(updateProjectRequest, this.project.id!);

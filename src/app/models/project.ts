@@ -4,6 +4,7 @@ export interface ProjectObject {
   phases: string[];
   owner: string;
   team: string[];
+  invitedUsers: string[];
 }
 
 export interface CreateProjectRequest {
@@ -11,7 +12,9 @@ export interface CreateProjectRequest {
 }
 
 export interface UpdateProjectRequest {
-  name: string | undefined;
-  phases: string[] | undefined;
-  team: string[] | undefined;
+  name?: string;
+  phases?: string[];
+  owner?: string;
+  team?: string[];
+  invitedUsers?: string[];
 }
